@@ -1,5 +1,5 @@
 /**
- * jquery-loading.1.8
+ * jquery-loading.1.9
  * https://github.com/zhouxitian/Loading-plug
  * author:zhouxitian@163.com
  */
@@ -13,9 +13,10 @@
 2015.8.13 v1.7 增加最大页面比例,最小页面比例
 2015.9.8  v1.8 修改autoHeight时页面高度增加margin-top;
 2015.9.10 v1.8 修改页面最大宽度大于opts.maxWidth时取opts.maxWidth;
+2015.11.10 v1.9 修改loadOptions.resize可以在外界手动设置停止
 */
 
-;(function($){
+;(function($,undefined){
 	var opts={ //默认配置
 		container:".section",
 		slow:false,//开启缓慢显示进度，默认 false
@@ -30,7 +31,10 @@
 		fullpage:false,//是否适应fullpage插件
 		autoHeight:false //尽量适应全屏
 	}
-	var loadOptions=window.loadOptions||{};
+	loadOptions=window.loadOptions||{};
+	if(loadOptions.resize==undefined){
+		loadOptions.resize=true;
+	}
 	$.extend(opts,loadOptions);
 	$.fn.extend({
 		loading:function(options){
@@ -181,10 +185,10 @@
 		}
 		$(window).resize(function(e){
 			if(isPC||(!isPC&&!(document.activeElement&&(document.activeElement.type=="text"||document.activeElement.type=="textarea")))){//防止触发input时屏幕变小
-				if(opts.setWidth){
+				if(opts.setWidth&&loadOptions.resize){
 					$(opts.container).setWidth(opts);
 				}
-				if(opts.setRem){
+				if(opts.setRem&&loadOptions.resize){
 					$(opts.container).eq(0).setRem(opts.maxWidth);
 				}
 			}
