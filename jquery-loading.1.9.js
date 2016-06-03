@@ -24,9 +24,9 @@
 		setRem:true,//使用rem单位
 		setWidth:true,//设置最大宽度
 		maxWidth:800,//最大宽度
-		maxRadio:1.575,//最大页面比例
-		minRadio:1.575,//最小页面比例
-		radio:1.575,//页面比例：1260:800
+		maxRadio:1.625,//最大页面比例
+		minRadio:1.625,//最小页面比例
+		radio:1.625,//页面比例：1300:800
 		resize:true,//自适应
 		fullpage:false,//是否适应fullpage插件
 		autoHeight:false //尽量适应全屏
@@ -62,6 +62,7 @@
 					}
 				});
 				var length=imgs.length;
+				//console.log(imgs);
 				var temp = {};
 				for (var i = 0; i < length; i++) {//去除重复
 					var tmp = imgs[i];
@@ -69,17 +70,17 @@
 						temp[imgs[i]] = "yes";
 					}
 				}
-				length = 0;
 				imgs = [];
 				for (var i in temp) {
-					imgs[length++] = i;
+					imgs.push(i);
 				}
+				length = imgs.length;
 				var num=length;
 				var pre=100;
 				if(length>0){
 					pre=1-num/length;
 					for(var i=0;i<length;i++){
-						(function(i){
+						//(function(i){
 							img[i]=new Image();
 							img[i].onerror=img[i].onload=function(){
 								num--;
@@ -110,7 +111,7 @@
 								this.onload = null; 
 							}
 							img[i].src=imgs[i];
-						})(i);
+						//})(i);
 					}
 				}else{
 					if(typeof opt.complete=="function"){
@@ -137,7 +138,7 @@
 					width=opts.maxWidth;
 				}
 				var radio=(height/width)<opts.minRadio?opts.minRadio:(height/width);
-				var setwidth=Math.ceil(height/radio);//比例800:1260 跟设计稿一致
+				var setwidth=Math.ceil(height/radio);//比例800:1300 跟设计稿一致
 				if(radio<=opts.maxRadio){
 					if(opts.autoHeight){
 						$(this).css({maxWidth:setwidth+"px",minWidth:setwidth+"px",height:height+(setwidth*(opts.maxRadio-radio))/2,marginTop:-(setwidth*(opts.maxRadio-radio))/2+"px"})
